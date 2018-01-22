@@ -67,7 +67,7 @@ function  BG_sub_function(StableVidName,OutFolder,TH_H,TH_S,TH_V,handles)
         im=4*(inputVid.read(ii)/4);
         
         BW=any(abs(double(rgb2hsv(im)-double(rgb2hsv(BG))))>repmat(reshape(TH,[1 1 3]),[xf,yf,1]),3);
-        BW=imerode(imdilate(BW,strel('disk',5)),strel('disk',5));
+        BW=imerode(imdilate(BW,strel('disk',15)),strel('disk',15));
         CC=bwconncomp(BW,8);
         numPixels = cellfun(@numel,CC.PixelIdxList);
         [~,p_maxVal]=max(numPixels);

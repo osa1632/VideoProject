@@ -142,9 +142,9 @@ try
         case {1}
             if (get(handles.VidCL,'Value')==0)
                 [FileName,PathName] = uigetfile({'*.*'}, 'Plesae choose an input video');
-                inputVid_fN=strcat([PathName,'/',FileName]);
+                inputVid_fN=strcat([PathName,'\\',FileName]);
             else
-                inputVid_fN='../Input/INPUT.avi';
+                inputVid_fN='..\\Input\\INPUT.avi';
             end
             L=str2double(get(handles.param1V,'String'));
             Stabilize_function(inputVid_fN,handles.OutputFolder,L,handles);
@@ -152,9 +152,9 @@ try
             if (get(handles.VidCL,'Value')==0)
                 
                 [FileName,PathName] =uigetfile({'*.*'}, 'Plesae choose a stabilized video');
-                StabVid_fn=strcat([PathName,'/',FileName]);
+                StabVid_fn=strcat([PathName,'\\',FileName]);
             else
-                StabVid_fn='../Output/stabilized.avi';
+                StabVid_fn='..\\Output\\stabilized.avi';
             end
             thH=str2double(get(handles.param1V,'String'));
             thS=str2double(get(handles.param2V,'String'));
@@ -165,16 +165,16 @@ try
             if (get(handles.VidCL,'Value')==0)
                 
                 [FileName,PathName]=uigetfile({'*.*'}, 'Plesae choose a stabilized video');
-                StabVid_fn=strcat([PathName,'/',FileName]);
+                StabVid_fn=strcat([PathName,'\\',FileName]);
                 
                 [FileName,PathName]=uigetfile({'*.*'}, 'Plesae choose a binary mask video');
-                MaskVid_fn=strcat([PathName,'/',FileName]);
+                MaskVid_fn=strcat([PathName,'\\',FileName]);
                 [FileName,PathName]=uigetfile({'*.*'}, 'Plesae choose a new background image');
-                newBG=strcat([PathName,'/',FileName]);
+                newBG=strcat([PathName,'\\',FileName]);
             else
-                StabVid_fn='../Output/stabilized.avi';
-                MaskVid_fn='../Output/binary.avi';
-                newBG='../Input/background.jpg';
+                StabVid_fn='..\\Output\\stabilized.avi';
+                MaskVid_fn='..\\Output\\binary.avi';
+                newBG='..\\Input\\background.jpg';
             end
             WinSizeBG=str2double(get(handles.param1V,'String'));
             Rho4Undecided=str2double(get(handles.param2V,'String'));
@@ -185,14 +185,15 @@ try
         case {4}
             if (get(handles.VidCL,'Value')==0)
                 [FileName,PathName]=uigetfile({'*.*'}, 'Plesae choose a matting video');
-                MatVid_fN=strcat([PathName,'/',FileName]);
+                MatVid_fN=strcat([PathName,'\\',FileName]);
             else
-                MatVid_fN='../Output/matted.avi';
+                MatVid_fN='..\\Output\\matted.avi';
             end
             N=str2double(get(handles.param1V,'String'));
             TrackingFunction(MatVid_fN,handles.OutputFolder,N,handles);
     end
-catch
+catch  ex
+    disp(ex)
 end
 set(handles.axes2,'Visible','off');
 set(handles.progress,'Visible','off');
@@ -220,19 +221,19 @@ try
     else
         switch (handles.operation)
             case {1}
-                videoFN='../Input/stabilized.avi';
+                videoFN='..\\Input\\stabilized.avi';
             case {2}
-                videoFN='../Output/extracted.avi';
+                videoFN='..\\Output\\extracted.avi';
             case {3}
-                videoFN='../Output/matted.avi';
+                videoFN='..\\Output\\matted.avi';
             case {4}
-                videoFN='../Output/OUTPUT.avi';
+                videoFN='..\\Output\\OUTPUT.avi';
         end
         if (get(handles.inRB,'Value'))
-            videoFN='../Input/INPUT.avi';
+            videoFN='..\\Input\\INPUT.avi';
         end
         if(get(handles.binRB,'Value'))
-            videoFN='../Output/binary.avi';
+            videoFN='..\\Output\\binary.avi';
         end
         
     end
@@ -437,7 +438,7 @@ if (get(handles.DefCL,'Value')==0)
     
     set(handles.param4B,'Min',500) ;
     set(handles.param4B,'Max',5000) ;
-    set(handles.param4B,'SliderStep',[100/4500 100/4500]) ;
+    set(handles.param4B,'SliderStep',[10/4500 100/4500]) ;
     set(handles.param4B,'Value',str2double(get(handles.param4V,'String'))) ;
     
     
@@ -774,10 +775,10 @@ if (~OutputFolder )
             questdlg('Output Folder will be the current dir?',' Are you Sure','Yes','No','No')))
         return;
     else
-        OutputFolder='./';
+        OutputFolder='.\\';
     end
 end
-handles.OutputFolder  = strcat(OutputFolder,'/');
+handles.OutputFolder  = strcat(OutputFolder,'\\');
 guidata(hObject,handles);
 set(handles.OpBtn,'Visible','on') ;
 
@@ -828,7 +829,7 @@ if (get(hObject,'Value')==1)
     set(handles.trkRB,'Value',0) ;
     set(handles.OpBtn,'Visible','on') ;
     
-    handles.OutputFolder  = '../Output/';
+    handles.OutputFolder  = '..\\Output\\';
     guidata(hObject,handles);
 else
     axes(handles.axes1);

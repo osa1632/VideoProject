@@ -123,8 +123,8 @@ function [newBG,StabVid,MaskVid,mattingVid,BG_density,FG_density]=initializiatio
     
     Mask1FG = Mask1 & ~imdilate(bwperim(Mask1,8), strel('disk', WinSizeBGFG,8));
     FGImage=Mask1FG.*imV;
-    BG_Scriblle = datasample(uint8(255*BGImage(:)),Def_NumberOfScribllePoints,'Weights',~Mask1FG(:));
-    FG_Scriblle    = datasample(uint8(255*FGImage(:)),Def_NumberOfScribllePoints,'Weights',~Mask1BG(:));
+    BG_Scriblle = datasample(uint8(255*BGImage(:)),Def_NumberOfScribllePoints,'Weights',1*~Mask1FG(:));
+    FG_Scriblle    = datasample(uint8(255*FGImage(:)),Def_NumberOfScribllePoints,'Weights',1*~Mask1BG(:));
 
     [~,BG_density,~,~]=kde(BG_Scriblle,256,0, 255);
     [~,FG_density,~,~]=kde(FG_Scriblle,256,0, 255);
